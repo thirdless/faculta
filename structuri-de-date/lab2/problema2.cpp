@@ -20,8 +20,10 @@ int main(){
 	for(int a = 0; a < lung / 2; a++){
 		temp = matrice[a][a];
 		for(int i = a; i < lung - a - 1; i++) matrice[a][i] = matrice[a][i + 1]; 
-		for(int i = a; i < lung - a - 1; i++) matrice[i][lung - a];
-		for(int i = lung - a - 1; i >= a; i--) matrice[]
+		for(int i = a; i < lung - a - 1; i++) matrice[i][lung - a] = matrice[i + 1];
+		for(int i = lung - a - 1; i >= a; i--) matrice[lung - a][i] = matrice[lung - a][i - 1];
+		for(int i = lung - a - 1; i >= a; i--) matrice[i][a] = matrice[i - 1][a];
+		matrice[a]
 	}
 
 }
