@@ -86,9 +86,4 @@ plot(xi,yi,'o',xe,ye,'-',xe,d1e,'--',xe,d2e,':',[aq aq],[-1.25 1.25],'-.',[bq bq
 xlabel('xi, xe');
 title(['yi:o ye:- d1:--d2:...',num2str(q)]);
 
-yye=sin(xe);
-err=norm(ye-yye)^2/(length(ye)-1);
-
-plot(xi,yye,'o');
-
 err
