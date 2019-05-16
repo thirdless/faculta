@@ -12,7 +12,7 @@ DI=c(:,4);
 
 he=input('he= ');
 while(he<=0 && hi>he)
-    printf('Variabila he nu se incadreaza \n');
+    fprintf('Variabila he nu se incadreaza \n');
     he=input('he= ');
 end
 
@@ -31,7 +31,7 @@ aq=input('aq= ');
 bq=input('bq= ');
 
 while(aq<=0 && bq>aq && bq>=4*pi)
-    printf('Variabilele nu se incadreaza \n');
+    fprintf('Variabilele nu se incadreaza \n');
     aq=input('aq= ');
     bq=input('bq= ');
 end
