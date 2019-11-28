@@ -1,0 +1,9 @@
+﻿  Game.cpp
+  GameObject.cpp
+  Main.cpp
+  Map.cpp
+  Player.cpp
+  TextureManager.cpp
+  Generating Code...
+  LINK : C:\Users\third\Desktop\SDL_GameTemplate\x64\Debug\SDL_GameTemplate.exe not found or not built by the last incremental link; performing full link
+  SDL_GameTemplate.vcxproj -> C:\Users\third\Desktop\SDL_GameTemplate\x64\Debug\SDL_GameTemplate.exe
