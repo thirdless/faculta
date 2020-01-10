@@ -1,4 +1,3 @@
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
@@ -25,8 +24,6 @@ begin
 	   -- rising edge
 	   if clock'event and clock = '1' then
 	   
-	       input <= B & C;
-	   
 	       -- start clock definitions
 	       if n < 100000000 then
 	           n := n + 1;
@@ -40,28 +37,30 @@ begin
 	           clockstate := 0;
 	       end if;
 	       -- end clock definitions
-	       
-	       if A = '0' and clockstate = 1 then
-	           -- jk
-               case input is
-                   when "11" =>
-                       state <= not state;
-                   when "10" =>
-                       state <= '1';
-                   when "01" =>
-                       state <= '0';
-                   when others =>
-                       null;
-                   end case;
-	       else
-	           if B = '0' and clockstate = 1 then
-	               -- d
-	               state <= C;
-	           elsif clockstate = 1 then
-	               -- t
-	               state <= not C;          
-	           end if;
-	       end if;
+	       if clockstate = 1 then
+               if A = '0' then
+                   -- jk
+                   input <= B & C;
+                   case input is
+                       when "11" =>
+                           state <= not state;
+                       when "10" =>
+                           state <= '1';
+                       when "01" =>
+                           state <= '0';
+                       when others =>
+                           null;
+                       end case;
+               else
+                   if B = '0' then
+                       -- d
+                       state <= C;
+                   else
+                       -- t
+                       state <= not C;          
+                   end if;
+               end if;
+           end if;
 	   end if;
     end process;
 
