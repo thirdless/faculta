@@ -16,11 +16,11 @@ int main(){
 		}
 	}
 	
-	for(int i = 0; i < n; i++){
-		for(int j = 0; j < n/2; j++){
+	for(int i = 0; i < n/2; i++){
+		for(int j = 0; j < n; j++){
 			temp = a[i][j];
-			a[i][j] = a[i][n - j - 1];
-			a[i][n - j - 1] = temp;
+			a[i][j] = a[n - i - 1][j];
+			a[n - i - 1][j] = temp;
 		}
 		
 	}
