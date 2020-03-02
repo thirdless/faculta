@@ -3,6 +3,9 @@ module gen_clk;
 reg clk1;
 reg clk2;
 reg clk3;
+	
+initial
+#200 $finish;
 
 inital
 begin
