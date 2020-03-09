@@ -83,7 +83,8 @@ module test;
 
 	initial
 	begin
-		
+		#0 clk = 1'b0;
+		forever #0 clk = ~clk;
 	end
 
 endmodule
