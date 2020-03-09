@@ -10,3 +10,19 @@ struct Nod{
 }
 
 *t->fii[word[0] - 'a'] = new Nod;
+
+
+--------------------------------
+
+
+int a = 5;
+
+void f(int a){
+  a = 3;
+}
+
+int main(){
+  int a = 5;
+  t(a);
+  // a = 5;
+}
