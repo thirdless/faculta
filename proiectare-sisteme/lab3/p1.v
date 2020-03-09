@@ -7,13 +7,13 @@ reg clk3;
 initial
 #200 $finish;
 
-inital
+initial
 begin
 	#0 clk1 = 1'b0;
 	forever #5 clk1 = ~clk1;
 end
 
-intial
+initial
 begin
 	#0 clk2 = 1'b1;
 	forever #10 clk2 = ~clk2;
