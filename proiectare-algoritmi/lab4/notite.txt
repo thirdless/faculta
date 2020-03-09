@@ -21,8 +21,14 @@ void f(int a){
   a = 3;
 }
 
+void f(int * a){
+  * a = 3;
+}
+
 int main(){
   int a = 5;
   t(a);
   // a = 5;
+  t(a);
+  // a = 3 pt cel cu pointer
 }
