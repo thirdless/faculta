@@ -1,0 +1,12 @@
+S = {0,1,2,..,9}
+word_size = 3
+
+nr de posibilitati = 10^3
+
+D = {"abc", "bac", "rac", "lac", "abr", "abz"}
+
+struct Nod{
+  struct Nod *fii[30];
+}
+
+*t->fii[word[0] - 'a'] = new Nod;
