@@ -19,7 +19,7 @@ public class Main6{
         s1 = s1.replace(" ", "");
         s2 = s2.replace(" ", "");
 
-        if(s1.length() != s1.length()) System.out.print("Cuvintele NU sunt anagrame!");
+        if(s1.length() != s2.length()) System.out.print("Cuvintele NU sunt anagrame!");
         else{
             while(s1.length() != 0){
                 temp1 = s1.charAt(0);
