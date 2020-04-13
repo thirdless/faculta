@@ -54,7 +54,7 @@ int main() {
         n->left = top1;
         n->right = top2;
         s += n->val;
-        cout << s << endl;
+        cout << "s = " << s << endl;
         v.push_back(n);
         make_heap(v.begin(), v.end(), comp());
 
