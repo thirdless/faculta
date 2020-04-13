@@ -5,9 +5,11 @@ public class EnglishObserver implements Observer {
     protected MessageSet subject;
 
     Map<String, String> dictionary = Map.of(
-        "Ana", "Anna",
-        "are", "has",
-        "mere", "apples"
+            "Ana", "Anna",
+            "are", "has",
+            "mere", "apples",
+            "Nastya", "Nastya",
+            "struguri", "grapes"
     );
 
     EnglishObserver(MessageSet subject)
@@ -21,11 +23,11 @@ public class EnglishObserver implements Observer {
         System.out.print("\nMesajul tradus in Engleza\n");
         String[] words;
         String msg = subject.getState();
-        words = mesaj.split(" ");
+        words = msg.split(" ");
         for(int i = 0; i < words.length; i++)
         {
-            if(dictionary.get(words[i]) == null) System.out.print(words[i] + " ");
-            else System.out.print(dictionary.get(words[i]) + " ");
+            if(dictionary.get(words[i]) != null) System.out.print(dictionary.get(words[i]) + " ");
+            else System.out.print(words[i] + " ");
         }
         System.out.println("");
     }
