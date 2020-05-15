@@ -11,15 +11,15 @@ using namespace std;
 
 struct Tree
 {
-				Tree* left, * right;
-				char letter;
-				int freq;
+    Tree* left, * right;
+    char letter;
+    int freq;
 };
 
 struct comp {
-				bool operator()(const Tree* a, const Tree* b) const {
-								return a->freq > b->freq;
-				}
+    bool operator()(const Tree* a, const Tree* b) const {
+        return a->freq > b->freq;
+    }
 };
 
 void sortTree(vector<Tree*> tree) {
@@ -36,71 +36,71 @@ void sortTree(vector<Tree*> tree) {
 }
 
 void createHeap(map<char, int>frecv, vector<Tree*> &output) {
-				map<char, int>::iterator it;
-				vector<Tree*> list;
+    map<char, int>::iterator it;
+    vector<Tree*> list;
 
-				for (it = frecv.begin(); it != frecv.end(); it++) {
-								Tree* nou = new Tree;
-								nou->letter = it->first;
-								nou->freq = it->second;
-								nou->left = 0;
-								nou->right = 0;
-								
-								list.push_back(nou);
-				}
+    for (it = frecv.begin(); it != frecv.end(); it++) {
+        Tree* nou = new Tree;
+        nou->letter = it->first;
+        nou->freq = it->second;
+        nou->left = 0;
+        nou->right = 0;
+        
+        list.push_back(nou);
+    }
 
     sortTree(list);
 
-				make_heap(list.begin(), list.end(), comp());
+    make_heap(list.begin(), list.end(), comp());
 
-				while (list.size() != 1) {
-								pop_heap(list.begin(), list.end(), comp());
+    while (list.size() != 1) {
+        pop_heap(list.begin(), list.end(), comp());
 
-								Tree* left = list.back();
-								list.pop_back();
+        Tree* left = list.back();
+        list.pop_back();
 
-								pop_heap(list.begin(), list.end(), comp());
+        pop_heap(list.begin(), list.end(), comp());
 
-								Tree* right = list.back();
-								list.pop_back();
+        Tree* right = list.back();
+        list.pop_back();
 
-								Tree* nou = new Tree;
-								nou->freq = left->freq + right->freq;
-								nou->left = left;
-								nou->right = right;
-								list.push_back(nou);
-								make_heap(list.begin(), list.end(), comp());
-				}
+        Tree* nou = new Tree;
+        nou->freq = left->freq + right->freq;
+        nou->left = left;
+        nou->right = right;
+        list.push_back(nou);
+        make_heap(list.begin(), list.end(), comp());
+    }
 
-				output = list;
+    output = list;
 }
 
 void frequencies(const char * name, map<char,int> &output) {
-				int array[STACK] = { 0 };
+    int array[STACK] = { 0 };
 
-				FILE * file = NULL;
-				errno_t err;
-				char c;
+    FILE * file = NULL;
+    errno_t err;
+    char c;
 
-				err = fopen_s(&file, name, "r");
-				if (err != 0) {
-								cout << "File not available\n";
-								exit(0);
-				}
-				
-				while ((c = fgetc(file)) != EOF) {
+    err = fopen_s(&file, name, "r");
+    if (err != 0) {
+        cout << "File not available\n";
+        exit(0);
+    }
+    
+    while ((c = fgetc(file)) != EOF) {
         array[(int)c] += 1;
-				}
+    }
 
-				fclose(file);
+    fclose(file);
 
-				char n;
-				for (int i = 0; i < STACK; i++) {
-								if (array[i] != 0) {
-												n = (char)i;
-												output[n] = array[i];
-								}
-				}
+    char n;
+    for (int i = 0; i < STACK; i++) {
+        if (array[i] != 0) {
+            n = (char)i;
+            output[n] = array[i];
+        }
+    }
 }
 
 string getCode(int data[], int len) {
@@ -113,17 +113,17 @@ string getCode(int data[], int len) {
 }
 
 void generateCodes(map<char, string> &codes, Tree* top, int data[], int index) {
-				if (top->left) {
-								data[index] = 0;
-								generateCodes(codes, top->left, data, index + 1);
-				}
-				if (top->right) {
-								data[index] = 1;
-								generateCodes(codes, top->right, data, index + 1);
-				}
-				if (!top->left && !top->right) {
-								codes[top->letter] = getCode(data, index);
-				}
+    if (top->left) {
+        data[index] = 0;
+        generateCodes(codes, top->left, data, index + 1);
+    }
+    if (top->right) {
+        data[index] = 1;
+        generateCodes(codes, top->right, data, index + 1);
+    }
+    if (!top->left && !top->right) {
+        codes[top->letter] = getCode(data, index);
+    }
 }
 
 void encodeText(const char * inputname, const char * outputname, map<char, string> codes) {
@@ -143,13 +143,13 @@ void encodeText(const char * inputname, const char * outputname, map<char, strin
 }
 
 int main() {
-				int temp_data[100];
-				map<char, int> frecv;
+    int temp_data[100];
+    map<char, int> frecv;
     map<char, string> codes;
-				vector<Tree*> tree;
+    vector<Tree*> tree;
 
-				frequencies("input.txt", frecv);
-				createHeap(frecv, tree);
-				generateCodes(codes, tree[0], temp_data, 0);
+    frequencies("input.txt", frecv);
+    createHeap(frecv, tree);
+    generateCodes(codes, tree[0], temp_data, 0);
     encodeText("input.txt", "output.txt", codes);
 }
