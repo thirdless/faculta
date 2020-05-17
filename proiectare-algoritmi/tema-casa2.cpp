@@ -4,6 +4,7 @@
 #include<map>
 #include<string>
 #include<fstream>
+#include<iomanip>
 
 using namespace std;
 
@@ -35,7 +36,7 @@ void sortTree(vector<Tree*> tree) {
     }
 }
 
-void createHeap(map<char, int>frecv, vector<Tree*> &output) {
+void createHeap(map<char, int>frecv, vector<Tree*>& output) {
     map<char, int>::iterator it;
     vector<Tree*> list;
 
@@ -45,7 +46,7 @@ void createHeap(map<char, int>frecv, vector<Tree*> &output) {
         nou->freq = it->second;
         nou->left = 0;
         nou->right = 0;
-        
+
         list.push_back(nou);
     }
 
@@ -75,10 +76,10 @@ void createHeap(map<char, int>frecv, vector<Tree*> &output) {
     output = list;
 }
 
-void frequencies(const char * name, map<char,int> &output) {
+void frequencies(const char* name, map<char, int>& output) {
     int array[STACK] = { 0 };
 
-    FILE * file = NULL;
+    FILE* file = NULL;
     errno_t err;
     char c;
 
@@ -87,7 +88,7 @@ void frequencies(const char * name, map<char,int> &output) {
         cout << "File not available\n";
         exit(0);
     }
-    
+
     while ((c = fgetc(file)) != EOF) {
         array[(int)c] += 1;
     }
@@ -112,7 +113,7 @@ string getCode(int data[], int len) {
     return code;
 }
 
-void generateCodes(map<char, string> &codes, Tree* top, int data[], int index) {
+void generateCodes(map<char, string>& codes, Tree* top, int data[], int index) {
     if (top->left) {
         data[index] = 0;
         generateCodes(codes, top->left, data, index + 1);
@@ -126,8 +127,8 @@ void generateCodes(map<char, string> &codes, Tree* top, int data[], int index) {
     }
 }
 
-void encodeText(const char * inputname, const char * outputname, map<char, string> codes) {
-    
+void encodeText(const char* inputname, const char* outputname, map<char, string> codes) {
+
     FILE* input = NULL;
     errno_t err1;
     char c;
@@ -142,14 +143,28 @@ void encodeText(const char * inputname, const char * outputname, map<char, strin
     fclose(input);
 }
 
+void showTable(map<char, int> frecv, map<char, string> codes) {
+    map<char, int>::iterator it;
+
+    cout << setw(6) << "Litera | " << setw(6) << "Frecv" << setw(15) << "Litera | " << setw(8) << "Cod" << endl;
+    for (int i = 0; i < 36; i++) cout << "-";
+    cout << endl;
+    
+    for (it = frecv.begin(); it != frecv.end(); it++) {
+        cout << setw(6) << it->first << " | " << setw(6) << it->second << setw(12) << it->first << " | " << setw(8) << codes[it->first] << endl;
+    }
+}
+
 int main() {
     int temp_data[100];
     map<char, int> frecv;
     map<char, string> codes;
     vector<Tree*> tree;
 
-    frequencies("input.txt", frecv);
-    createHeap(frecv, tree);
-    generateCodes(codes, tree[0], temp_data, 0);
-    encodeText("input.txt", "output.txt", codes);
+    frequencies("input.txt", frecv); // pas 1 - aflare frecvente pt fiecare caracter
+    createHeap(frecv, tree); // pas 2 - creare arbore Huffman 
+    generateCodes(codes, tree[0], temp_data, 0); // pas 3 - aflare coduri pentru fiecare caracter
+    encodeText("input.txt", "output.txt", codes); // pas 4 - creare fisier output in care fiecare char din input este inlocuit cu codul gasit la pasul 3
+    
+    showTable(frecv, codes);
 }
