@@ -13,7 +13,7 @@ void pauza() {
 	_getch();
 }
 
-ElementMeniu::ElementMeniu(char *nume) {
+ElementMeniu::ElementMeniu(const char* nume) {
 	this->nume = new char[100];
 	strcpy(this->nume, nume);
 }
@@ -37,7 +37,7 @@ void ElementMeniu::afisareTitlu() {
 	cout << ":" << endl << endl;
 }
 
-Operatie::Operatie(char *nume): ElementMeniu(nume) {}
+Operatie::Operatie(const char* nume) : ElementMeniu(nume) {}
 
 void Operatie::executa() {
 	clrscr();
@@ -45,13 +45,13 @@ void Operatie::executa() {
 	this->execOperatie();
 }
 
-Meniu::Meniu(char *nume) : ElementMeniu(nume) {
-	this->elemente = new ElementMeniu*[nrMaxElemente];
+Meniu::Meniu(const char* nume) : ElementMeniu(nume) {
+	this->elemente = new ElementMeniu * [nrMaxElemente];
 	this->nrElemente = 0;
 }
 
 Meniu::~Meniu() {
-	for (int i = 0; i<nrElemente; i++) {
+	for (int i = 0; i < nrElemente; i++) {
 		delete elemente[i];
 	}
 	delete[] elemente;
@@ -86,7 +86,7 @@ int Meniu::citireComanda() {
 }
 
 
-void Meniu::adaugaElement(ElementMeniu *element) {
+void Meniu::adaugaElement(ElementMeniu* element) {
 	nrElemente++;
 	elemente[nrElemente - 1] = element;
 	element->parinte = this;
@@ -116,7 +116,7 @@ void Meniu::executa() {
 	}
 }
 
-OperatieAdunare::OperatieAdunare(char *nume): Operatie(nume) {}
+OperatieAdunare::OperatieAdunare(const char* nume) : Operatie(nume) {}
 
 Lista::Lista(int dim) {
 	this->dim = dim;
@@ -147,13 +147,13 @@ int Lista::operator[](int num) {
 }
 
 void Lista::sterge(int index) {
-	for (int i = index; i<n - 1; i++) {
+	for (int i = index; i < n - 1; i++) {
 		elem[i] = elem[i + 1];
 	}
 	n--;
 }
 void Lista::afisare() {
-	for (int i = 0; i<n; i++) {
+	for (int i = 0; i < n; i++) {
 		cout << i << ". " << elem[i] << endl;
 	}
 }
@@ -166,7 +166,7 @@ void OperatieAdunare::execOperatie() {
 	pauza();
 }
 
-OperatieScadere::OperatieScadere(char *nume) : Operatie(nume) {}
+OperatieScadere::OperatieScadere(const char* nume) : Operatie(nume) {}
 
 void OperatieScadere::execOperatie() {
 	int a, b;
@@ -176,7 +176,7 @@ void OperatieScadere::execOperatie() {
 	pauza();
 }
 
-OpAdaugaInLista::OpAdaugaInLista(char *nume, Lista *lista): Operatie(nume) {
+OpAdaugaInLista::OpAdaugaInLista(const char* nume, Lista* lista) : Operatie(nume) {
 	this->lista = lista;
 }
 void OpAdaugaInLista::execOperatie() {
@@ -186,7 +186,7 @@ void OpAdaugaInLista::execOperatie() {
 	(*lista) += num;
 	pauza();
 }
-OpAfisareLista::OpAfisareLista(char *nume, Lista *lista) :
+OpAfisareLista::OpAfisareLista(const char* nume, Lista* lista) :
 	Operatie(nume) {
 	this->lista = lista;
 }
@@ -195,7 +195,7 @@ void OpAfisareLista::execOperatie() {
 	pauza();
 }
 
-OpStergereLista::OpStergereLista(char *nume, Lista *lista) : Operatie(nume) {
+OpStergereLista::OpStergereLista(const char* nume, Lista* lista) : Operatie(nume) {
 	this->lista = lista;
 }
 
@@ -207,7 +207,7 @@ void OpStergereLista::execOperatie() {
 	pauza();
 }
 
-OpConcatLista::OpConcatLista(char *nume, Lista *lista, Lista * lista2) :
+OpConcatLista::OpConcatLista(const char* nume, Lista* lista, Lista* lista2) :
 	Operatie(nume) {
 	this->lista = lista;
 	this->lista2 = lista2;
@@ -222,16 +222,16 @@ int Lista::getDim() {
 }
 
 int main() {
-	Meniu *meniu = new Meniu("Meniu Principal");
-	Meniu *submeniuCalculator = new Meniu("Calculator");
+	Meniu* meniu = new Meniu("Meniu Principal");
+	Meniu* submeniuCalculator = new Meniu("Calculator");
 	meniu->adaugaElement(submeniuCalculator);
 	submeniuCalculator->adaugaElement(new OperatieAdunare("'+'"));
 	submeniuCalculator->adaugaElement(new OperatieScadere("'-'"));
 
-	Lista * lista = new Lista(10);
-	Lista * lista2 = new Lista(10);
+	Lista* lista = new Lista(10);
+	Lista* lista2 = new Lista(10);
 
-	Meniu *submeniuLista = new Meniu("Lista");
+	Meniu* submeniuLista = new Meniu("Lista");
 	meniu->adaugaElement(submeniuLista);
 	submeniuLista->adaugaElement(new OpAdaugaInLista("'+ pt 1'", lista));
 	submeniuLista->adaugaElement(new OpAdaugaInLista("'+ pt 2'", lista2));
@@ -240,7 +240,7 @@ int main() {
 	submeniuLista->adaugaElement(new OpConcatLista("'Concat'", lista, lista2));
 
 	meniu->executa();
-	
+
 	delete meniu;
 
 	cout << endl << endl << "Sfarsit." << endl;
