@@ -1,0 +1,101 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.80.7.1083 for Atmel AVR           12/Oct/2020  13:58:47
+# Copyright 1996-2016 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Atmel AVR
+#
+#    Source file  =  C:\Users\third\Desktop\SOC12\main.c
+#    Command line =  
+#        C:\Users\third\Desktop\SOC12\main.c --cpu=m16 -ms -o
+#        C:\Users\third\Desktop\SOC12\Debug\Obj -lC
+#        C:\Users\third\Desktop\SOC12\Debug\List -lA
+#        C:\Users\third\Desktop\SOC12\Debug\List --initializers_in_flash
+#        --no_cse --no_inline --no_code_motion --no_cross_call --no_clustering
+#        --no_tbaa --debug -DENABLE_BIT_DEFINITIONS -e --eeprom_size 512 --clib
+#        -On
+#    Locale       =  Romanian_Romania.1250
+#    List file    =  C:\Users\third\Desktop\SOC12\Debug\List\main.lst
+#    Object file  =  C:\Users\third\Desktop\SOC12\Debug\Obj\main.r90
+#
+###############################################################################
+
+C:\Users\third\Desktop\SOC12\main.c
+      1          #include <inavr.h>
+      2          #include <iom16.h> 
+
+   \                                 In  segment ABSOLUTE, at 0x32
+   \   union <unnamed> volatile __io _A_PORTD
+   \                     _A_PORTD:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x31
+   \   union <unnamed> volatile __io _A_DDRD
+   \                     _A_DDRD:
+   \   00000000                      DS8 1
+
+   \                                 In  segment CODE, align 2, keep-with-next
+      3          int main(void)
+   \                     main:
+      4          {
+      5           DDRD = (1<<PD1);
+   \   00000000   E002               LDI     R16, 2
+   \   00000002   BB01               OUT     0x11, R16
+      6           while(1)
+      7           {
+      8           PORTD=2;
+   \                     ??main_0:
+   \   00000004   E002               LDI     R16, 2
+   \   00000006   BB02               OUT     0x12, R16
+      9           __delay_cycles(2000000);
+   \   00000008   E70F               LDI     R16, 127
+   \   0000000A   E11A               LDI     R17, 26
+   \   0000000C   E026               LDI     R18, 6
+   \   0000000E   5001               SUBI    R16, 1
+   \   00000010   4010               SBCI    R17, 0
+   \   00000012   4020               SBCI    R18, 0
+   \   00000014   F7E1               BRNE    $-6
+   \   00000016   C000               RJMP    $+2
+   \   00000018   0000               NOP
+     10           PORTD=0;
+   \   0000001A   E000               LDI     R16, 0
+   \   0000001C   BB02               OUT     0x12, R16
+     11           __delay_cycles(2000000);
+   \   0000001E   E70F               LDI     R16, 127
+   \   00000020   E11A               LDI     R17, 26
+   \   00000022   E026               LDI     R18, 6
+   \   00000024   5001               SUBI    R16, 1
+   \   00000026   4010               SBCI    R17, 0
+   \   00000028   4020               SBCI    R18, 0
+   \   0000002A   F7E1               BRNE    $-6
+   \   0000002C   C000               RJMP    $+2
+   \   0000002E   0000               NOP
+   \   00000030   CFE9               RJMP    ??main_0
+   \   00000032                      REQUIRE _A_DDRD
+   \   00000032                      REQUIRE _A_PORTD
+     12           }
+     13          }
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   main
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       1  _A_DDRD
+       1  _A_PORTD
+      50  main
+
+ 
+  2 bytes in segment ABSOLUTE
+ 50 bytes in segment CODE
+ 
+ 50 bytes of CODE memory
+  0 bytes of DATA memory (+ 2 bytes shared)
+
+Errors: none
+Warnings: none
