@@ -1,0 +1,142 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.80.7.1083 for Atmel AVR           19/Oct/2020  22:23:07
+# Copyright 1996-2016 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Atmel AVR
+#
+#    Source file  =  
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\main.c
+#    Command line =  
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\main.c
+#        --cpu=m16 -ms -o
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\Debug\Obj
+#        -lC
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\Debug\List
+#        -lA
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\Debug\List
+#        --initializers_in_flash --no_cse --no_inline --no_code_motion
+#        --no_cross_call --no_clustering --no_tbaa --debug
+#        -DENABLE_BIT_DEFINITIONS -e --eeprom_size 512 --clib -On
+#    Locale       =  Romanian_Romania.1250
+#    List file    =  
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\Debug\List\main.lst
+#    Object file  =  
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\Debug\Obj\main.r90
+#
+###############################################################################
+
+C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\main.c
+      1          #include"usart.h"
+      2          
+
+   \                                 In  segment NEAR_Z, align 1, keep-with-next
+   \   00000000                      REQUIRE `?<Segment init: NEAR_Z>`
+      3          unsigned char data_send[15];
+   \                     data_send:
+   \   00000000                      DS8 15
+      4          
+
+   \                                 In  segment CODE, align 2, keep-with-next
+      5          void main( void )
+   \                     main:
+      6          {
+   \   00000000   ........           CALL    ?PROLOGUE3_L09
+   \   00000004   972D               SBIW    R29:R28, 13
+      7            unsigned char string[]="Hello world!", aux;
+   \   00000006   018E               MOVW    R17:R16, R29:R28
+   \   00000008   ....               LDI     R30, LOW(`?<Constant "Hello world!">`)
+   \   0000000A   ....               LDI     R31, (`?<Constant "Hello world!">`) >> 8
+   \   0000000C   E04D               LDI     R20, 13
+   \   0000000E   E050               LDI     R21, 0
+   \   00000010   ........           CALL    ?ML_SRAM_SRAM_16_L07
+      8            unsigned int i=0;
+   \   00000014   E080               LDI     R24, 0
+   \   00000016   E090               LDI     R25, 0
+      9            USART_initialize(BAUD_RATE);
+   \   00000018   E00C               LDI     R16, 12
+   \   0000001A   E010               LDI     R17, 0
+   \   0000001C   ........           CALL    USART_initialize
+     10            while(1)
+     11            { 
+     12              aux=USART_Receive();
+   \                     ??main_0:
+   \   00000020   ........           CALL    USART_Receive
+   \   00000024   2FA0               MOV     R26, R16
+     13              i=0;
+   \   00000026   E080               LDI     R24, 0
+   \   00000028   E090               LDI     R25, 0
+     14              if(aux=='s'||aux=='S')
+   \   0000002A   37A3               CPI     R26, 115
+   \   0000002C   F011               BREQ    ??main_1
+   \   0000002E   35A3               CPI     R26, 83
+   \   00000030   F7B9               BRNE    ??main_0
+     15              {
+     16                while(string[i] != '\0')
+   \                     ??main_1:
+   \   00000032   01FE               MOVW    R31:R30, R29:R28
+   \   00000034   0FE8               ADD     R30, R24
+   \   00000036   1FF9               ADC     R31, R25
+   \   00000038   8100               LD      R16, Z
+   \   0000003A   2300               TST     R16
+   \   0000003C   F389               BREQ    ??main_0
+     17                {
+     18                  USART_transmit(string[i]);
+   \   0000003E   01FE               MOVW    R31:R30, R29:R28
+   \   00000040   0FE8               ADD     R30, R24
+   \   00000042   1FF9               ADC     R31, R25
+   \   00000044   8100               LD      R16, Z
+   \   00000046   ........           CALL    USART_transmit
+     19                  i++;
+   \   0000004A   9601               ADIW    R25:R24, 1
+   \   0000004C   CFF2               RJMP    ??main_1
+     20                }
+     21              }
+     22              
+     23            }
+     24          }
+
+   \                                 In  segment NEAR_ID, align 1, keep-with-next
+   \                     `?<Initializer for <Constant "Hello world!">>`:
+   \   00000000   65486C6C206F       DC8 "Hello world!"
+   \              6F776C722164
+   \              00          
+
+   \                                 In  segment NEAR_I, align 1, keep-with-next
+   \   00000000                      REQUIRE `?<Segment init: NEAR_I>`
+   \                     `?<Constant "Hello world!">`:
+   \   00000000                      DS8 13
+   \   0000000D                      REQUIRE `?<Initializer for <Constant "Hello world!">>`
+
+   Maximum stack usage in bytes:
+
+   CSTACK RSTACK Function
+   ------ ------ --------
+     16      2   main
+       16      2   -> USART_Receive
+       16      2   -> USART_initialize
+       16      2   -> USART_transmit
+       16      2 ?ML_SRAM_SRAM_16_L07
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+      13  ?<Constant "Hello world!">
+      13  ?<Initializer for <Constant "Hello world!">>
+      15  data_send
+      78  main
+      12  -- Other
+
+ 
+ 78 bytes in segment CODE
+ 12 bytes in segment INITTAB
+ 13 bytes in segment NEAR_I
+ 13 bytes in segment NEAR_ID
+ 15 bytes in segment NEAR_Z
+ 
+ 91 bytes of CODE memory (+ 12 bytes shared)
+ 28 bytes of DATA memory
+
+Errors: none
+Warnings: none

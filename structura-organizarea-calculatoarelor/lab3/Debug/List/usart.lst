@@ -1,0 +1,191 @@
+###############################################################################
+#
+# IAR C/C++ Compiler V6.80.7.1083 for Atmel AVR           19/Oct/2020  22:23:07
+# Copyright 1996-2016 IAR Systems AB.
+# Standalone license - IAR Embedded Workbench for Atmel AVR
+#
+#    Source file  =  
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\usart.c
+#    Command line =  
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\usart.c
+#        --cpu=m16 -ms -o
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\Debug\Obj
+#        -lC
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\Debug\List
+#        -lA
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\Debug\List
+#        --initializers_in_flash --no_cse --no_inline --no_code_motion
+#        --no_cross_call --no_clustering --no_tbaa --debug
+#        -DENABLE_BIT_DEFINITIONS -e --eeprom_size 512 --clib -On
+#    Locale       =  Romanian_Romania.1250
+#    List file    =  
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\Debug\List\usart.lst
+#    Object file  =  
+#        C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\Debug\Obj\usart.r90
+#
+###############################################################################
+
+C:\Users\third\Desktop\structura-organizarea-calculatoarelor\lab3\usart.c
+      1          #include "usart.h"
+
+   \                                 In  segment ABSOLUTE, at 0x40
+   \   union <unnamed> volatile __io _A_UBRRH
+   \                     _A_UBRRH:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x31
+   \   union <unnamed> volatile __io _A_DDRD
+   \                     _A_DDRD:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x2c
+   \   union <unnamed> volatile __io _A_UDR
+   \                     _A_UDR:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x2b
+   \   union <unnamed> volatile __io _A_UCSRA
+   \                     _A_UCSRA:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x2a
+   \   union <unnamed> volatile __io _A_UCSRB
+   \                     _A_UCSRB:
+   \   00000000                      DS8 1
+
+   \                                 In  segment ABSOLUTE, at 0x29
+   \   union <unnamed> volatile __io _A_UBRRL
+   \                     _A_UBRRL:
+   \   00000000                      DS8 1
+
+   \                                 In  segment CODE, align 2, keep-with-next
+      2          void USART_initialize(unsigned short int baud_rate)
+   \                     USART_initialize:
+      3          {
+      4            /* seteazã baud rate */
+      5            UBRRH = (unsigned char)(baud_rate >> 8);
+   \   00000000   0198               MOVW    R19:R18, R17:R16
+   \   00000002   2F23               MOV     R18, R19
+   \   00000004   E030               LDI     R19, 0
+   \   00000006   BD20               OUT     0x20, R18
+      6            UBRRL = (unsigned char)(baud_rate & 0xFF);
+   \   00000008   2F20               MOV     R18, R16
+   \   0000000A   B929               OUT     0x09, R18
+      7            UCSRB = (1 << RXEN) | (1 << TXEN); /* activeazã transmisia ?i
+   \   0000000C   E128               LDI     R18, 24
+   \   0000000E   B92A               OUT     0x0A, R18
+      8            recep?ia la ie?ire */
+      9            /* seteazã pinul TXD: ie?ire */
+     10            DDRD |= (1 << PD1);
+   \   00000010   9A89               SBI     0x11, 0x01
+     11            /* seteazã pinul RXD: intrare */
+     12            DDRD &= ~(1 << PD0);
+   \   00000012   9888               CBI     0x11, 0x00
+     13            /* activeazã întreruperea */
+     14            //UCSRB |= (1 << RXCIE);
+     15          }
+   \   00000014   9508               RET
+   \   00000016                      REQUIRE _A_UBRRH
+   \   00000016                      REQUIRE _A_UBRRL
+   \   00000016                      REQUIRE _A_UCSRB
+   \   00000016                      REQUIRE _A_DDRD
+
+   \                                 In  segment CODE, align 2, keep-with-next
+     16          void USART_transmit(unsigned char data)
+   \                     USART_transmit:
+   \                     ??USART_transmit_0:
+     17          {
+     18            /* a?teaptã pânã ce se terminã de transmis toate datele ?i dupã trece
+     19            la urmãtoarele informa?ii */
+     20            static int i = 0;
+     21            while (!( UCSRA & (1 << UDRE)))
+   \   00000000   9B5D               SBIS    0x0B, 0x05
+   \   00000002   CFFE               RJMP    ??USART_transmit_0
+     22            {
+     23              ;
+     24            }
+     25            UDR = data;
+   \   00000004   B90C               OUT     0x0C, R16
+     26            data_send[i++] = data;
+   \   00000006   ....               LDI     R30, LOW(??i)
+   \   00000008   ....               LDI     R31, (??i) >> 8
+   \   0000000A   8120               LD      R18, Z
+   \   0000000C   8131               LDD     R19, Z+1
+   \   0000000E   01F9               MOVW    R31:R30, R19:R18
+   \   00000010   ....               SUBI    R30, LOW((-(data_send) & 0xFFFF))
+   \   00000012   ....               SBCI    R31, (-(data_send) & 0xFFFF) >> 8
+   \   00000014   8300               ST      Z, R16
+   \   00000016   ....               LDI     R30, LOW(??i)
+   \   00000018   ....               LDI     R31, (??i) >> 8
+   \   0000001A   8120               LD      R18, Z
+   \   0000001C   8131               LDD     R19, Z+1
+   \   0000001E   5F2F               SUBI    R18, 255
+   \   00000020   4F3F               SBCI    R19, 255
+   \   00000022   8320               ST      Z, R18
+   \   00000024   8331               STD     Z+1, R19
+     27          }
+   \   00000026   9508               RET
+   \   00000028                      REQUIRE _A_UCSRA
+   \   00000028                      REQUIRE _A_UDR
+
+   \                                 In  segment NEAR_Z, align 1, keep-with-next
+   \   00000000                      REQUIRE `?<Segment init: NEAR_Z>`
+   \                     ??i:
+   \   00000000                      DS8 2
+
+   \                                 In  segment CODE, align 2, keep-with-next
+     28          unsigned char USART_Receive( void )
+   \                     USART_Receive:
+   \                     ??USART_Receive_0:
+     29          {
+     30            /* A?teaptã recep?ionarea datelor */
+     31            while ( !(UCSRA & (1<<RXC)) )
+   \   00000000   9B5F               SBIS    0x0B, 0x07
+   \   00000002   CFFE               RJMP    ??USART_Receive_0
+     32            {
+     33              ;
+     34            }
+     35            /* Preia ?i returneazã datele recep?ionate din buffer */
+     36            return UDR;
+   \   00000004   B10C               IN      R16, 0x0C
+   \   00000006   9508               RET
+   \   00000008                      REQUIRE _A_UCSRA
+   \   00000008                      REQUIRE _A_UDR
+     37          }
+
+   Maximum stack usage in bytes:
+
+   RSTACK Function
+   ------ --------
+      2   USART_Receive
+      2   USART_initialize
+      2   USART_transmit
+
+
+   Segment part sizes:
+
+   Bytes  Function/Label
+   -----  --------------
+       8  USART_Receive
+      22  USART_initialize
+      40  USART_transmit
+       1  _A_DDRD
+       1  _A_UBRRH
+       1  _A_UBRRL
+       1  _A_UCSRA
+       1  _A_UCSRB
+       1  _A_UDR
+       2  i
+       6  -- Other
+
+ 
+  6 bytes in segment ABSOLUTE
+ 70 bytes in segment CODE
+  6 bytes in segment INITTAB
+  2 bytes in segment NEAR_Z
+ 
+ 70 bytes of CODE memory (+ 6 bytes shared)
+  2 bytes of DATA memory (+ 6 bytes shared)
+
+Errors: none
+Warnings: none
