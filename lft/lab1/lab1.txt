@@ -1,0 +1,4 @@
+class MyLang2Py{
+  bin 'py'
+  class line L {db [\'',L,''\], 10}
+}
