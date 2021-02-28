@@ -1,4 +1,22 @@
 class MyLang2Py{
   bin 'py'
-  class line L {db [\'',L,''\], 10}
+  class line L {db [/'',L,''/], 10}
+  class Var1 v=i {db [/'',v,=,i,''/], 10}
+  class Var1 v=?? {db [/''/]}
+  class line Var? .. V {Var1 V}
+  class line Array a(i) {db [/'',a,=,'[',i,']'/], 10} // Nu am gasit o metoda sa separ argumenmtele cu un spatiu sau o virgula
+  class line Output? .. v {db [/'print(',v,')'/], 10}
+  class line Input? v {db [/'input(',v,')'/], 10}
+  class line For a=b:c {db [/'for ',a,' in range(',b,', ',c,'):'/], 10}
 }
+
+MyLang2Py
+
+Array a(yes, yes)
+Var a = ?, b = 2, c = 3
+a = a + b
+Var d = 1
+a = a + d
+Output a
+Input d
+For i=1:3
