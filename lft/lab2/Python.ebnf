@@ -1,0 +1,13 @@
+Litera = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z";
+Cifra   = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+Spatiu = " " , {" "};
+OptSpatiu = "" | Spatiu;
+Valoare = Cifra | "'" {Litera} {Cifra} "'";
+Instructiuni = "print" | "input";
+Operatie = "+" | "-" | "*" | "/";
+
+Variabila = OptSpatiu Litera "=" OptSpatiu Valoare OptSpatiu;
+Expresie = OptSpatiu Litera OptSpatiu Operatie OptSpatiu Litera;
+Atribuire = OptSpatiu Litera "=" OptSpatiu Expresie OptSpatiu;
+Instructiune = OptSpatiu Instructiuni "(" Valoare ")" OptSpatiu;
+Sintaxa = Instructiune| Variabila | Atribuire;
